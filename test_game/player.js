@@ -1,4 +1,4 @@
-class Player extends GameObject {
+class Player extends CBN.GameObject {
   constructor() {
     super("megaman");
     this.sprite = new Sprite(100, 100, 50, 50, 'mario');
