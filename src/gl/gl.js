@@ -21,14 +21,11 @@ class GL {
     }
 
     this.context.viewport(0, 0, canvas.width, canvas.height);
-    this.context.enable(gl.context.DEPTH_TEST);
   }
 }
 
 export function createContext(canvas) {
-  let gl = canvas.getContext('webgl', {
-    premultipliedAlpha: false  // Ask for non-premultiplied alpha
-  });
+  let gl = canvas.getContext('webgl');
 
   if(!gl) {
     console.log('Falling back on experiemental webgl');
@@ -38,6 +35,12 @@ export function createContext(canvas) {
   if(!gl) {
     alert('Your browser does not support WebGL');
   }
+
+  // gl.viewport(0, 0, canvas.width, canvas.height)
+  gl.enable(gl.DEPTH_TEST);
+  // gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+  // gl.enable(gl.BLEND);
+  // gl.disable(gl.DEPTH_TEST);
 
   return gl;
 }

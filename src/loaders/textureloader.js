@@ -7,7 +7,7 @@ export function loadTexture(id, url) {
   image.onload = function() {
     console.log("Loaded image: " + id);
     loadingManager.count--;
-    textureManager.createTexture(id, image);
+    textureManager.create(id, image);
   };
   image.src = url;
 };

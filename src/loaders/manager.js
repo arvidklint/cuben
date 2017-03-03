@@ -1,3 +1,5 @@
+import ShaderLoader from './shaderloader';
+
 class LoadingManager {
   constructor() {
     this.count = 0;

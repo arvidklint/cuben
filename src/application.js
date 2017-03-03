@@ -1,7 +1,6 @@
 import { ticker } from './core/ticker';
 import { loadingManager } from './loaders/manager';
 import { shaderManager } from './core/shader/manager';
-import { camera } from './core/display/camera';
 import Display from './core/display/display';
 
 var vertexShaderString = [
@@ -22,6 +21,7 @@ var fragmentShaderString = [
   'uniform sampler2D sampler;',
   'void main() {',
     'gl_FragColor = texture2D(sampler, fragTexCoord);',
+    'if(gl_FragColor.a < 0.5) discard;',
     // 'gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);',
   '}'
 ].join('\n');
@@ -48,7 +48,7 @@ export default class Application {
 
   _preload() {
     // Default preloading of shaders
-    shaderManager.createShader("spriteShader", vertexShaderString, fragmentShaderString);
+    shaderManager.create("spriteShader", vertexShaderString, fragmentShaderString);
 
     global.preload();
 

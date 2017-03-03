@@ -14,12 +14,12 @@ class ShaderManager {
    * @param String id - the string id of the shader
    * @param String shader - the shader program in string format
    */
-  createShader(id, vShader, fShader) {
+  create(id, vShader, fShader) {
     let shader = new Shader(vShader, fShader);
     this.shaders.set(id, shader);
   }
 
-  getShader(id) {
+  get(id) {
     return this.shaders.get(id);
   }
 }

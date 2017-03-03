@@ -6,8 +6,7 @@ export default class Camera {
     this.cameraMatrix = mat4.create();
     this.orthoMatrix = mat4.create();
     this.orthoMatrix = mat4.ortho(this.orthoMatrix, 0.0, width, 0.0, height, 0, 100);
-    this.width = width;
-    this.height = height;
+    this.size = new Vector2(width, height);
     this.scale = 1;
   }
 
@@ -34,5 +33,13 @@ export default class Camera {
 
   get y() {
     return this.position.y;
+  }
+
+  get width() {
+    return this.size.x;
+  }
+
+  get height() {
+    return this.size.y;
   }
 }

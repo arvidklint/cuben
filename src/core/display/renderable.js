@@ -6,15 +6,22 @@ import { shaderManager } from '../shader/manager';
 export default class Renderable {
   constructor(x, y, width, height, texture, shader) {
     this.position = new Vector2(x, y);
+    this.anchor = new Vector2(0.5, 0.5);
     this.size = new Vector2(width, height);
+    this.scale = 1;
     this.triangleVertices = null;
-    this.texture = textureManager.getTexture(texture);
-    this.shader = shaderManager.getShader(shader);
+    this.texture = textureManager.get(texture);
+    this.shader = shaderManager.get(shader);
   }
 
-  init_rendering(canvas, camera) {
+  init_rendering(canvas, camera, grid) {
     this.camera = camera;
     this.gl = createContext(canvas);
+    this.grid = grid;
+
+    // Add itself to the grid
+    this.grid.add(this);
+
     console.log("init rendering");
     this.shader.init(canvas);
     this.texture.init(canvas);
@@ -87,6 +94,20 @@ export default class Renderable {
       x + width, y, 1.0, 1.0,
       x, y, 0.0, 1.0
     ];
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.vao);
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(this.triangleVertices), this.gl.STATIC_DRAW);
+    // unbind buffer
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, null);
+  }
+
+  moveTo(x, y) {
+    if(this.grid === null) {
+      console.error("grid not initialised");
+      return;
+    }
+
+    this.grid.remove(this);
+    this.grid.add(this);
   }
 
   set x(value) {
@@ -100,6 +121,7 @@ export default class Renderable {
 
   set y(value) {
     this.position.y = value;
+    this._updatePosition();
   }
 
   get y() {

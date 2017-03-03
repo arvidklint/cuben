@@ -5,12 +5,12 @@ class TextureManager {
     this.textures = new Map();
   }
 
-  createTexture(id, image) {
+  create(id, image) {
     let texture = new Texture(image);
     this.textures.set(id, texture);
   }
 
-  getTexture(id) {
+  get(id) {
     return this.textures.get(id);
   }
 }
